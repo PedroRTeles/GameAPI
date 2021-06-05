@@ -3,15 +3,17 @@ using System;
 using GameAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace GameAPI.Migrations
 {
     [DbContext(typeof(GameAPIContext))]
-    partial class GameAPIContextModelSnapshot : ModelSnapshot
+    [Migration("20210605235356_RemovePlatform")]
+    partial class RemovePlatform
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

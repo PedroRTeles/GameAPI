@@ -17,6 +17,6 @@ namespace GameAPI.Models
         [Required]
         public DateTime ReleaseDate { get; set; }
         [Required]
-        public Platform Platform { get; set; } 
+        public string Platform { get; set; }
     }
 }

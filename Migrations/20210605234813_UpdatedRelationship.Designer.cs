@@ -3,15 +3,17 @@ using System;
 using GameAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace GameAPI.Migrations
 {
     [DbContext(typeof(GameAPIContext))]
-    partial class GameAPIContextModelSnapshot : ModelSnapshot
+    [Migration("20210605234813_UpdatedRelationship")]
+    partial class UpdatedRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,16 +38,51 @@ namespace GameAPI.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("character varying(64)");
 
-                    b.Property<string>("Platform")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<long>("PlatformId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PlatformId")
+                        .IsUnique();
+
                     b.ToTable("Game");
+                });
+
+            modelBuilder.Entity("GameAPI.Models.Platform", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Platform");
+                });
+
+            modelBuilder.Entity("GameAPI.Models.Game", b =>
+                {
+                    b.HasOne("GameAPI.Models.Platform", "Platform")
+                        .WithOne("Game")
+                        .HasForeignKey("GameAPI.Models.Game", "PlatformId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Platform");
+                });
+
+            modelBuilder.Entity("GameAPI.Models.Platform", b =>
+                {
+                    b.Navigation("Game");
                 });
 #pragma warning restore 612, 618
         }

@@ -8,6 +8,5 @@ namespace GameAPI.Data
         public GameAPIContext(DbContextOptions<GameAPIContext> options) : base(options) { }
 
         public DbSet<Game> Game { get; set; }
-        public DbSet<Platform> Platform { get; set; }
     }
 }
