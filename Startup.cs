@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,10 +29,14 @@ namespace GameAPI
         {
 
             services.AddControllers();
-            services.AddScoped<IGameRepository, MockGameRepository>();
+            services.AddScoped<IGameRepository, PostgresGameRepository>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GameAPI", Version = "v1" });
+            });
+            services.AddDbContext<GameAPIContext>(options =>
+            {
+                options.UseNpgsql(Configuration.GetConnectionString("ConnectionString"));
             });
         }
 
