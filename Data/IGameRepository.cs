@@ -7,5 +7,6 @@ namespace GameAPI.Data
     {
         public List<Game> GetAllGames();
         public Game GetGameById(long id);
+        public void SaveGame(Game game);
     }
 }

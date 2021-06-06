@@ -1,6 +1,5 @@
 ﻿using GameAPI.Dtos;
 using GameAPI.Models;
-using System;
 using System.Collections.Generic;
 
 namespace GameAPI.Mappers
@@ -21,10 +20,19 @@ namespace GameAPI.Mappers
 
         public static GameResponseDto ConvertToDto(Game game) => new()
         {
+            Id = game.Id,
             Name = game.Name,
             Description = game.Description,
             Platform = game.Platform,
             ReleaseDate = game.ReleaseDate.ToString("dd/MM/yyyy")
+        };
+
+        public static Game ConvertToModel(GameCreateRequestDto gameCreateRequestDto) => new()
+        {
+            Name = gameCreateRequestDto.Name,
+            Description = gameCreateRequestDto.Description,
+            Platform = gameCreateRequestDto.Platform,
+            ReleaseDate = gameCreateRequestDto.ReleaseDate
         };
     }
 }

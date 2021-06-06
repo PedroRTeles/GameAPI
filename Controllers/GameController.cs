@@ -23,12 +23,21 @@ namespace GameAPI.Controllers
             return Ok(GameMapper.ConvertToListDto(games));
         }
 
-        [HttpGet("games/{id}")]
+        [HttpGet("games/{id}", Name = "GetGameById")]
         public ActionResult<GameResponseDto> GetGameById(long id)
         {
             var game = repository.GetGameById(id);
 
             return Ok(GameMapper.ConvertToDto(game));
+        }
+
+        [HttpPost("games/")]
+        public ActionResult<GameResponseDto> CreateGame(GameCreateRequestDto gameCreateRequest)
+        {
+            var game = GameMapper.ConvertToModel(gameCreateRequest);
+            repository.SaveGame(game);
+
+            return CreatedAtRoute(nameof(GetGameById), new { Id = game.Id }, GameMapper.ConvertToDto(game));
         }
     }
 }

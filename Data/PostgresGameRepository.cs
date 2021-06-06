@@ -22,5 +22,11 @@ namespace GameAPI.Data
         {
             return context.Game.FirstOrDefault(g => g.Id == id);
         }
+
+        public void SaveGame(Game game)
+        {
+            context.Game.Add(game);
+            context.SaveChanges();
+        }
     }
 }
