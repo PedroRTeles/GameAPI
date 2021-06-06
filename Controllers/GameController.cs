@@ -1,5 +1,6 @@
 ﻿using GameAPI.Data;
-using GameAPI.Models;
+using GameAPI.Dtos;
+using GameAPI.Mappers;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -15,19 +16,19 @@ namespace GameAPI.Controllers
         }
 
         [HttpGet("games/")]
-        public ActionResult<List<Game>> GetAllGames()
+        public ActionResult<List<GameResponseDto>> GetAllGames()
         {
             var games = repository.GetAllGames();
 
-            return Ok(games);
+            return Ok(GameMapper.ConvertToListDto(games));
         }
 
         [HttpGet("games/{id}")]
-        public ActionResult<Game> GetGameById(long id)
+        public ActionResult<GameResponseDto> GetGameById(long id)
         {
             var game = repository.GetGameById(id);
 
-            return Ok(game);
+            return Ok(GameMapper.ConvertToDto(game));
         }
     }
 }
