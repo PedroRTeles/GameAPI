@@ -34,5 +34,15 @@ namespace GameAPI.Mappers
             Platform = gameCreateRequestDto.Platform,
             ReleaseDate = gameCreateRequestDto.ReleaseDate
         };
+
+        public static Game UpdateModel(GameUpdateRequestDto dto, Game game)
+        {
+            game.Name = dto.Name;
+            game.Description = dto.Description;
+            game.Platform = dto.Platform;
+            game.ReleaseDate = dto.ReleaseDate;
+
+            return game;
+        }
     }
 }

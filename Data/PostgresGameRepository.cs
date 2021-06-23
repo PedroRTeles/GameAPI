@@ -23,10 +23,20 @@ namespace GameAPI.Data
             return context.Game.FirstOrDefault(g => g.Id == id);
         }
 
+        public void SaveChanges()
+        {
+            context.SaveChanges();
+        }
+
         public void SaveGame(Game game)
         {
             context.Game.Add(game);
-            context.SaveChanges();
+            SaveChanges();
+        }
+
+        public void UpdateGame(Game game)
+        {
+            // Not Implemented
         }
     }
 }

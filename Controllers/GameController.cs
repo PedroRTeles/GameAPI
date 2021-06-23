@@ -39,5 +39,22 @@ namespace GameAPI.Controllers
 
             return CreatedAtRoute(nameof(GetGameById), new { Id = game.Id }, GameMapper.ConvertToDto(game));
         }
+
+        [HttpPut("games/{id}")]
+        public ActionResult UpdateGame(int id, GameUpdateRequestDto gameUpdateRequest)
+        {
+            var gameModelInRepo = repository.GetGameById(id);
+
+            if(gameModelInRepo == null)
+            {
+                return NotFound();
+            }
+
+            var model = GameMapper.UpdateModel(gameUpdateRequest, gameModelInRepo);
+
+            repository.SaveChanges();
+
+            return NoContent();
+        }
     }
 }
