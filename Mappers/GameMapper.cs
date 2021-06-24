@@ -27,6 +27,13 @@ namespace GameAPI.Mappers
             ReleaseDate = game.ReleaseDate.ToString("dd/MM/yyyy")
         };
 
+        public static GameUpdateRequestDto ConvertToUpdateRequestDto(Game game) => new()
+        {
+            Name = game.Name,
+            Description = game.Description,
+            Platform = game.Platform
+        };
+
         public static Game ConvertToModel(GameCreateRequestDto gameCreateRequestDto) => new()
         {
             Name = gameCreateRequestDto.Name,

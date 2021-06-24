@@ -1,6 +1,7 @@
 ﻿using GameAPI.Data;
 using GameAPI.Dtos;
 using GameAPI.Mappers;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -51,6 +52,31 @@ namespace GameAPI.Controllers
             }
 
             var model = GameMapper.UpdateModel(gameUpdateRequest, gameModelInRepo);
+
+            repository.SaveChanges();
+
+            return NoContent();
+        }
+
+        [HttpPatch("games/{id}")]
+        public ActionResult PartialGameUpdte(int id, JsonPatchDocument<GameUpdateRequestDto> patchDocument)
+        {
+            var gameModelInRepo = repository.GetGameById(id);
+
+            if (gameModelInRepo == null)
+            {
+                return NotFound();
+            }
+
+            var gameToPatch = GameMapper.ConvertToUpdateRequestDto(gameModelInRepo);
+            patchDocument.ApplyTo(gameToPatch, ModelState);
+
+            if(!TryValidateModel(gameToPatch))
+            {
+                return ValidationProblem();
+            }
+
+            var model = GameMapper.UpdateModel(gameToPatch, gameModelInRepo);
 
             repository.SaveChanges();
 
