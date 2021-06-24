@@ -10,5 +10,6 @@ namespace GameAPI.Data
         public void SaveChanges();
         public void SaveGame(Game game);
         public void UpdateGame(Game game);
+        public void DeleteGame(Game game);
     }
 }

@@ -6,6 +6,11 @@ namespace GameAPI.Data
 {
     public class MockGameRepository : IGameRepository
     {
+        public void DeleteGame(Game game)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Game> GetAllGames()
         {
             return new List<Game>

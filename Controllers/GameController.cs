@@ -82,5 +82,20 @@ namespace GameAPI.Controllers
 
             return NoContent();
         }
+
+        [HttpDelete("games/{id}")]
+        public ActionResult DeleteGame(int id)
+        {
+            var gameModelInRepo = repository.GetGameById(id);
+
+            if (gameModelInRepo == null)
+            {
+                return NotFound();
+            }
+
+            repository.DeleteGame(gameModelInRepo);
+
+            return NoContent();
+        }
     }
 }

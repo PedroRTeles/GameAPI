@@ -13,6 +13,12 @@ namespace GameAPI.Data
             this.context = context;
         }
 
+        public void DeleteGame(Game game)
+        {
+            context.Game.Remove(game);
+            SaveChanges();
+        }
+
         public List<Game> GetAllGames()
         {
             return context.Game.ToList();
